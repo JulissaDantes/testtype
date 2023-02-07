@@ -6,4 +6,6 @@ library MyLibrary { }
 
 interface MyInterface { }
 
-abstract contract MyContract { }
+abstract contract MyContract { 
+    function foo() public {}
+}
