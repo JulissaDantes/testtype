@@ -6,3 +6,9 @@ import "custom-tag/token/ERC20/ERC20.sol";
 contract MyToken is ERC20 {
     constructor() ERC20("MyToken", "MTK") {}
 }
+
+import "chainlink-dev/ValidatorProxy.sol";
+
+abstract contract MyOtherContract is ValidatorProxy {
+
+}

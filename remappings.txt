@@ -1,1 +1,2 @@
 custom-tag=node_modules/@openzeppelin/contracts
+chainlink-dev=lib/chainlink-brownie-contracts/contracts/src/v0.8/dev
