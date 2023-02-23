@@ -12,3 +12,10 @@ import "chainlink-dev/ValidatorProxy.sol";
 abstract contract MyOtherContract is ValidatorProxy {
 
 }
+
+import "@openzeppelin/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL2.sol";
+
+contract MyVulnerableContract is CrossChainEnabledArbitrumL2 {
+
+}
+
