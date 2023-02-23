@@ -6,3 +6,6 @@
 	path = lib/chainlink-brownie-contracts
 	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
 	branch = 1.2.0
+[submodule "lib/contracts-playground"]
+	path = lib/contracts-playground
+	url = https://github.com/JulissaDantes/contracts-playground
