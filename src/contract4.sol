@@ -7,7 +7,7 @@ contract MyToken is ERC20 {
     constructor() ERC20("MyToken", "MTK") {}
 }
 
-import "chainlink-dev/ValidatorProxy.sol";
+import "chainlink-dev/contracts/src/v0.8/dev/ValidatorProxy.sol";
 
 abstract contract MyOtherContract is ValidatorProxy {
 
@@ -19,3 +19,6 @@ contract MyVulnerableContract is CrossChainEnabledArbitrumL2 {
 
 }
 
+import "contracts-playground/contracts/WizardToken.sol";
+
+contract MyOtherToken is WizardToken {}
