@@ -22,3 +22,9 @@ contract MyVulnerableContract is CrossChainEnabledArbitrumL2 {
 import "contracts-playground/contracts/WizardToken.sol";
 
 contract MyOtherToken is WizardToken {}
+
+import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+
+contract MyOtherVulnerableContract {
+    using ERC165Checker for address;
+}
