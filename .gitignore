@@ -4,3 +4,4 @@ out
 script
 build
 .env
+results.json
