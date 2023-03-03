@@ -1,76 +1,28 @@
 const { Octokit, App } = require("octokit");
+const  fs  = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
 
 const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
+    auth: process.env.GIgetAllPRCommentsB_TOKEN,
 });
-/*
-interface Identifier {
-    type: string;
-    value: string;
-  }
-  
-  interface Reference {
-    url: string;
-  }
-  
-  interface Advisory {
-    description: string;
-    identifiers: Identifier[];
-    references: Reference[];
-    severity: string;
-    summary: string;
-    updatedAt: string;
-  }
-  
-  interface AdvisoryNode {
-    advisory: Advisory;
-  }
-  
-  interface SecurityVulnerabilities {
-    nodes: AdvisoryNode[];
-  }
-  
-  interface Repository {
-    securityVulnerabilities: SecurityVulnerabilities;
-  }
-  
-  interface Response {
-    repository: Repository;
-  }*/
-
-async function getAdvisories () {
-    const query = `query {repository(owner: "JulissaDantes", name: "contracts-playground") {
-        packages(first: 10) {
-          edges {
-            node {
-              name
-            }
-          }
-        }}
-      }`;
-
-    const variables = {
-    owner: "JulissaDantes",
-    repo: "contracts-playground"
-    };
-
+ async function getAllPRComments(){
     try {
-       const advisories = await octokit.graphql(query, variables).then((response: any) => {
-        console.log("respondio esto", response.repository.packages);
-        return response.repository.vulnerabilityAlerts.nodes.map((node: any) => {
-          return node.advisory;
-        })});
-         
-        console.log("result", advisories);
+        const response = await octokit.request(`GET /repos/${process.env.owner}/${process.env.repo}/pulls/6/comments`);
+        const result = Array.from(response.data);
+        console.log(result);
+        const data = result.map((r: any) => {return {'id': r.id, 'body': r.body}} );
+        await fs.promises.writeFile('results.json', JSON.stringify(data));
+        console.table(data);
+      
       } catch (error) {
-        console.error(error);
-        console.error('Failed to retrieve vulnerability alerts.');
+        console.log(error)
       }
-}
 
-getAdvisories();
+ }
+
+ getAllPRComments();
+
 
 /*
 Benefits of using octokit instead of fetch
