@@ -28,3 +28,9 @@ import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 contract MyOtherVulnerableContract {
     using ERC165Checker for address;
 }
+
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+
+contract MyOtherDowngradedContract {
+    using ERC165Checker for address;
+}
