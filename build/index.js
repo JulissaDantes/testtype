@@ -9,76 +9,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const { Octokit, App } = require("octokit");
+const fs = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
 const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
 });
-/*
-interface Identifier {
-    type: string;
-    value: string;
-  }
-  
-  interface Reference {
-    url: string;
-  }
-  
-  interface Advisory {
-    description: string;
-    identifiers: Identifier[];
-    references: Reference[];
-    severity: string;
-    summary: string;
-    updatedAt: string;
-  }
-  
-  interface AdvisoryNode {
-    advisory: Advisory;
-  }
-  
-  interface SecurityVulnerabilities {
-    nodes: AdvisoryNode[];
-  }
-  
-  interface Repository {
-    securityVulnerabilities: SecurityVulnerabilities;
-  }
-  
-  interface Response {
-    repository: Repository;
-  }*/
-function getAdvisories() {
+function thu() {
     return __awaiter(this, void 0, void 0, function* () {
-        const query = `query {repository(owner: "JulissaDantes", name: "contracts-playground") {
-        packages(first: 10) {
-          edges {
-            node {
-              name
-            }
-          }
-        }}
-      }`;
-        const variables = {
-            owner: "JulissaDantes",
-            repo: "contracts-playground"
-        };
         try {
-            const advisories = yield octokit.graphql(query, variables).then((response) => {
-                console.log("respondio esto", response.repository.packages);
-                return response.repository.vulnerabilityAlerts.nodes.map((node) => {
-                    return node.advisory;
-                });
-            });
-            console.log("result", advisories);
+            const response = yield octokit.request(`GET /repos/OpenZeppelin/dependency-checker/pulls/6/comments`);
+            const result = Array.from(response.data);
+            console.log(result);
+            const data = result.map((r) => { return { 'id': r.id, 'body': r.body }; });
+            yield fs.promises.writeFile('results.json', JSON.stringify(data));
+            console.table(data);
         }
         catch (error) {
-            console.error(error);
-            console.error('Failed to retrieve vulnerability alerts.');
+            console.log(error);
         }
     });
 }
-getAdvisories();
+thu();
 /*
 Benefits of using octokit instead of fetch
 Authentication: Octokit provides built-in authentication support, making it easy to authenticate requests to the API.
