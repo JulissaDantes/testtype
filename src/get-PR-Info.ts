@@ -3,9 +3,13 @@ const  fs  = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
 
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
-  });
+interface Metadata {
+  contracts: string[];
+}
+
+const octokit = new Octokit({
+  auth: process.env.GITHUB_TOKEN,
+});
 
 async function getAllPRComments(){
   try {
@@ -23,12 +27,28 @@ async function getAllPRComments(){
 
 async function getPRInfo(){
   try {
-      const response = await octokit.request(`GET /repos/${process.env.owner}/${process.env.repo}/pulls/6`);
-      const result = response.data.body;
-      console.log(result);    
+    //const response = await octokit.request(`GET /repos/${process.env.owner}/${process.env.repo}/pulls/6`);
+    const response = await octokit.request(`GET /repos/JulissaDantes/testtype/pulls/1`);
+    const result = response.data.body;
+    const regex = /<!--(\{contracts[\s\S]*?)-->/g;
+    const comments: string[] = [];
+    let metadata: any;
+    let match;
+    while ((match = regex.exec(result)) !== null) {
+      comments.push(match[1]);
+    }
+    if (comments.length === 1) {
+      const comment = comments.pop()!.toString();
+      metadata = JSON.parse(comment);
+      console.log(metadata.contracts);
+    } else if (comments.length > 1) {
+      //metadata = findMetadata(comments);
+      //console.log(metadata); 
+    } 
   } catch (error) {
     console.log(error)
   }
 }
+
 getPRInfo()
 //node build/get-PR-Info.js 
