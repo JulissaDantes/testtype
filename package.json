@@ -12,8 +12,10 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@octokit/rest": "^19.0.7",
     "@openzeppelin/contracts": "^4.7.0",
     "dotenv": "^16.0.3",
-    "octokit": "^2.0.14"
+    "octokit": "^2.0.14",
+    "solidity-lexer": "github:frangio/solidity-lexer"
   }
 }
