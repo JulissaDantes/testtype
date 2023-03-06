@@ -20,7 +20,6 @@ async function getAllPRComments(){
       console.log(error)
     }
 }
-getAllPRComments();
 
 async function getPRInfo(){
   try {
@@ -31,5 +30,5 @@ async function getPRInfo(){
     console.log(error)
   }
 }
-
-getPRInfo();
+getPRInfo()
+//node build/get-PR-Info.js 
